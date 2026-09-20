@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="color-scheme" content="dark">
+  <title>Jarvis Media</title>
+  <link rel="stylesheet" href="./style.css">
+  <script src="https://telegram.org/js/telegram-web-app.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/hls.js@1/dist/hls.min.js"></script>
+</head>
+<body>
+  <main class="shell">
+    <header class="topbar">
+      <div>
+        <div class="eyebrow">JARVIS</div>
+        <h1>Media</h1>
+      </div>
+      <button id="closeBtn" class="icon" aria-label="Đóng">✕</button>
+    </header>
+
+    <div class="badges">
+      <span id="modeBadge" class="badge">Đang chờ</span>
+      <span class="badge safe">🛡️ Safe / Clean Mode</span>
+    </div>
+
+    <section class="card player">
+      <div id="emptyState" class="empty">
+        <div class="emoji">🎬</div>
+        <h2>Jarvis Media</h2>
+        <p>Dán link YouTube, MP4, WebM, HLS (.m3u8) hoặc website HTTPS.</p>
+      </div>
+
+      <div id="youtubeWrap" class="wrap hidden">
+        <iframe id="youtubeFrame"
+          title="YouTube player"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+          allowfullscreen></iframe>
+      </div>
+
+      <div id="directWrap" class="wrap hidden">
+        <video id="video" controls playsinline preload="metadata"></video>
+      </div>
+
+      <div id="webWrap" class="wrap hidden">
+        <div class="note">Safe Web dùng sandbox để hạn chế popup/chuyển hướng. Một số website có thể chặn nhúng bằng CSP/X-Frame-Options.</div>
+        <iframe id="webFrame"
+          title="Website viewer"
+          sandbox="allow-scripts allow-same-origin allow-forms allow-presentation"
+          referrerpolicy="no-referrer"></iframe>
+      </div>
+
+      <div id="errorBox" class="error hidden"></div>
+    </section>
+
+    <section class="card controls">
+      <label for="urlInput">Link media / website</label>
+      <div class="inputrow">
+        <input id="urlInput" type="url" inputmode="url" autocomplete="off" placeholder="https://youtu.be/...">
+        <button id="openBtn" class="primary">Mở</button>
+      </div>
+      <div class="quick">
+        <button id="back10">⏪ 10s</button>
+        <button id="playPause">⏯️</button>
+        <button id="forward10">10s ⏩</button>
+        <button id="fullscreen">⛶</button>
+      </div>
+    </section>
+
+    <section class="card info">
+      <h3>Clean Mode</h3>
+      <p><b>Direct media:</b> phát URL media trực tiếp nên không tải popup/banner/script của trang gốc.</p>
+      <p><b>Website:</b> sandbox hạn chế popup/chuyển hướng nhưng không bảo đảm loại bỏ mọi quảng cáo trong trang.</p>
+      <p><b>YouTube:</b> dùng player nhúng chính thức; quảng cáo do YouTube phân phối bên trong player không bị can thiệp.</p>
+      <p class="muted">Không vượt DRM, paywall, đăng nhập bắt buộc hoặc hạn chế embed.</p>
+    </section>
+  </main>
+  <script src="./app.js"></script>
+</body>
+</html>
