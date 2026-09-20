@@ -32,4 +32,18 @@ input:focus{border-color:var(--accent)}
 .quick{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-top:10px}
 .info p{color:#c6d3df;line-height:1.45;margin:8px 0}
 .muted{color:var(--muted)!important;font-size:13px}
+#focusExit{display:none}
+body.focus-mode{padding:0;overflow:hidden;background:#000}
+body.focus-mode .topbar,
+body.focus-mode .badges,
+body.focus-mode .controls,
+body.focus-mode .info{display:none!important}
+body.focus-mode .shell{max-width:none;width:100%;height:100dvh;margin:0}
+body.focus-mode .player{position:fixed;inset:0;z-index:9998;margin:0;border:0;border-radius:0;min-height:100dvh;height:100dvh;background:#000}
+body.focus-mode .wrap,
+body.focus-mode .wrap iframe,
+body.focus-mode .wrap video,
+body.focus-mode #webFrame{width:100%!important;height:100dvh!important;min-height:100dvh!important}
+body.focus-mode .note{display:none!important}
+body.focus-mode #focusExit{display:block;position:fixed;z-index:10000;top:max(10px,env(safe-area-inset-top));right:10px;width:48px;height:48px;padding:0;border-radius:50%;background:rgba(10,18,28,.88);backdrop-filter:blur(8px)}
 @media(max-width:520px){.quick{grid-template-columns:repeat(2,1fr)}.wrap iframe,.wrap video{height:56vw}}
