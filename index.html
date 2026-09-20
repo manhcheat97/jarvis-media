@@ -5,21 +5,21 @@
   <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
   <meta name="color-scheme" content="dark">
   <title>Jarvis Media</title>
-  <link rel="stylesheet" href="./style.css?v=20260921f">
+  <link rel="stylesheet" href="./style.css?v=20260921j">
   <script src="https://telegram.org/js/telegram-web-app.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/hls.js@1/dist/hls.min.js"></script>
 </head>
 <body>
   <main class="shell">
     <header class="topbar"><div><div class="eyebrow">JARVIS</div><h1>Media</h1></div><button id="closeBtn" class="icon" aria-label="Đóng">✕</button></header>
-    <div class="badges"><span id="modeBadge" class="badge">Đang chờ</span><span class="badge safe">🛡️ Safe / Clean Mode</span></div>
+    <div class="badges"><span id="modeBadge" class="badge">Đang chờ</span><button id="webSafetyToggle" class="badge webtoggle hidden" type="button">🔓 Full Web</button><span class="badge safe">🎬 Clean Player</span></div>
     <section class="card player">
       <div id="emptyState" class="empty"><div class="emoji">🎬</div><h2>Jarvis Media</h2><p>Dán link YouTube, MP4, WebM, HLS (.m3u8) hoặc website HTTPS.</p></div>
       <div id="youtubeWrap" class="wrap hidden"><iframe id="youtubeFrame" title="YouTube player" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; fullscreen" allowfullscreen></iframe></div>
       <div id="directWrap" class="wrap hidden"><video id="video" controls playsinline preload="metadata"></video></div>
       <div id="webWrap" class="wrap hidden">
-        <div class="note">Safe Web: popup/chuyển hướng ngoài vẫn bị hạn chế; media và chế độ phóng to đã được mở.</div>
-        <iframe id="webFrame" title="Website viewer" sandbox="allow-scripts allow-same-origin allow-forms allow-presentation allow-modals" allow="autoplay; encrypted-media; fullscreen; picture-in-picture; screen-wake-lock" allowfullscreen referrerpolicy="strict-origin-when-cross-origin"></iframe>
+        <div id="webNote" class="note">Full Web: không sandbox để ưu tiên player và fullscreen. Popup/chuyển hướng của website có thể xuất hiện.</div>
+        <iframe id="webFrame" title="Website viewer" allow="autoplay; encrypted-media; fullscreen; picture-in-picture; screen-wake-lock" allowfullscreen referrerpolicy="strict-origin-when-cross-origin"></iframe>
       </div>
       <div id="errorBox" class="error hidden"></div>
     </section>
@@ -37,6 +37,6 @@
     </section>
   </main>
   <button id="focusExit" aria-label="Thu nhỏ">↙</button>
-  <script src="./app.js?v=20260921h"></script>
+  <script src="./app.js?v=20260921j"></script>
 </body>
 </html>
