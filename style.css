@@ -47,3 +47,5 @@ body.focus-mode #webFrame{width:100%!important;height:100dvh!important;min-heigh
 body.focus-mode .note{display:none!important}
 body.focus-mode #focusExit{display:block;position:fixed;z-index:10000;top:max(10px,env(safe-area-inset-top));right:10px;width:48px;height:48px;padding:0;border-radius:50%;background:rgba(10,18,28,.88);backdrop-filter:blur(8px)}
 @media(max-width:520px){.quick{grid-template-columns:repeat(2,1fr)}.wrap iframe,.wrap video{height:56vw}}
+.webtoggle{border:1px solid var(--line);cursor:pointer}
+.webtoggle:not(.hidden){display:inline-flex;align-items:center}
