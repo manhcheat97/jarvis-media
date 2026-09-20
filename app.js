@@ -8,4 +8,43 @@ function openDirect(src){hideAll();directWrap.classList.remove('hidden');modeBad
 function openWeb(src){hideAll();webFrame.src=src;webWrap.classList.remove('hidden');modeBadge.textContent='Safe Web';currentMode='web'}
 function openAny(input){input=(input||'').trim();if(!/^https:\/\//i.test(input))return showError('Mini App chỉ mở URL HTTPS.');urlInput.value=input;const yid=youtubeId(input);if(yid)return openYoutube(yid);if(isDirect(input))return openDirect(input);return openWeb(input)}
 function loadQuery(){const p=new URLSearchParams(location.search),mode=p.get('mode'),v=p.get('v'),src=p.get('src');if(mode==='youtube'&&v)return openYoutube(v);if((mode==='direct'||mode==='web')&&src){try{return mode==='direct'?openDirect(src):openWeb(src)}catch(_){return showError('URL media không hợp lệ.')}}emptyState.classList.remove('hidden')}
-$('openBtn').addEventListener('click',()=>openAny(urlInput.value));urlInput.addEventListener('keydown',e=>{if(e.key==='Enter')openAny(urlInput.value)});$('closeBtn').addEventListener('click',()=>tg?tg.close():history.back());$('playPause').addEventListener('click',()=>{if(currentMode==='direct'){if(video.paused)video.play().catch(()=>{});else video.pause()}});$('back10').addEventListener('click',()=>{if(currentMode==='direct'&&Number.isFinite(video.currentTime))video.currentTime=Math.max(0,video.currentTime-10)});$('forward10').addEventListener('click',()=>{if(currentMode==='direct'&&Number.isFinite(video.currentTime))video.currentTime+=10});$('fullscreen').addEventListener('click',async()=>{const el=currentMode==='direct'?video:currentMode==='youtube'?youtubeFrame:currentMode==='web'?webFrame:null;if(el&&el.requestFullscreen){try{await el.requestFullscreen()}catch(_){}}});loadQuery()})();
+async function requestJarvisFullscreen(){
+  let telegramRequested=false;
+  if(tg){
+    try{tg.expand()}catch(_){}
+    try{
+      if(typeof tg.disableVerticalSwipes==='function')tg.disableVerticalSwipes();
+    }catch(_){}
+    try{
+      if(typeof tg.requestFullscreen==='function'){
+        if(!tg.isFullscreen)tg.requestFullscreen();
+        telegramRequested=true;
+      }
+    }catch(_){}
+  }
+
+  if(telegramRequested)return;
+
+  const el=currentMode==='direct'?video:currentMode==='youtube'?youtubeFrame:currentMode==='web'?webFrame:null;
+  if(el&&el.requestFullscreen){
+    try{await el.requestFullscreen();return}catch(_){}
+  }
+
+  modeBadge.textContent='Fullscreen không hỗ trợ';
+}
+if(tg&&typeof tg.onEvent==='function'){
+  try{
+    tg.onEvent('fullscreenChanged',e=>{
+      if(e&&e.is_fullscreen)modeBadge.textContent=currentMode==='empty'?'Toàn màn hình':modeBadge.textContent;
+    });
+    tg.onEvent('fullscreenFailed',()=>{
+      const el=currentMode==='direct'?video:currentMode==='youtube'?youtubeFrame:currentMode==='web'?webFrame:null;
+      if(el&&el.requestFullscreen){
+        Promise.resolve(el.requestFullscreen()).catch(()=>{modeBadge.textContent='Fullscreen không hỗ trợ'});
+      }else{
+        modeBadge.textContent='Fullscreen không hỗ trợ';
+      }
+    });
+  }catch(_){}
+}
+$('openBtn').addEventListener('click',()=>openAny(urlInput.value));urlInput.addEventListener('keydown',e=>{if(e.key==='Enter')openAny(urlInput.value)});$('closeBtn').addEventListener('click',()=>tg?tg.close():history.back());$('playPause').addEventListener('click',()=>{if(currentMode==='direct'){if(video.paused)video.play().catch(()=>{});else video.pause()}});$('back10').addEventListener('click',()=>{if(currentMode==='direct'&&Number.isFinite(video.currentTime))video.currentTime=Math.max(0,video.currentTime-10)});$('forward10').addEventListener('click',()=>{if(currentMode==='direct'&&Number.isFinite(video.currentTime))video.currentTime+=10});$('fullscreen').addEventListener('click',requestJarvisFullscreen);loadQuery()})();
