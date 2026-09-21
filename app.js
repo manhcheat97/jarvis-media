@@ -25,8 +25,8 @@ function applyWebSafety(reload=true){
 function openBrowser(src){
   src=(src||'').trim();
   if(!/^https:\/\//i.test(src))return showError('Browser chỉ mở URL HTTPS.');
+  openWeb(src);
   modeBadge.textContent='Browser';
-  try{window.location.assign(src)}catch(_){showError('Không mở được website này.')}
 }
 function openWeb(src){
   hideAll();
@@ -44,18 +44,9 @@ function loadQuery(){const startParam=tg&&tg.initDataUnsafe?tg.initDataUnsafe.st
 async function requestJarvisFullscreen(){
   document.body.classList.add('focus-mode');
   try{window.scrollTo(0,0)}catch(_){}
-  if(tg){
-    try{tg.expand()}catch(_){}
-    try{if(typeof tg.disableVerticalSwipes==='function')tg.disableVerticalSwipes()}catch(_){}
-    try{if(typeof tg.requestFullscreen==='function'&&!tg.isFullscreen)tg.requestFullscreen()}catch(_){}
-  }
 }
 function exitJarvisFullscreen(){
   document.body.classList.remove('focus-mode');
-  if(tg){
-    try{if(typeof tg.enableVerticalSwipes==='function')tg.enableVerticalSwipes()}catch(_){}
-    try{if(typeof tg.exitFullscreen==='function'&&tg.isFullscreen)tg.exitFullscreen()}catch(_){}
-  }
 }
 $('openBtn').addEventListener('click',()=>openAny(urlInput.value));
 urlInput.addEventListener('keydown',e=>{if(e.key==='Enter')openAny(urlInput.value)});
