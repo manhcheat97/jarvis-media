@@ -49,3 +49,43 @@ body.focus-mode #focusExit{display:block;position:fixed;z-index:10000;top:max(10
 @media(max-width:520px){.quick{grid-template-columns:repeat(2,1fr)}.wrap iframe,.wrap video{height:56vw}}
 .webtoggle{border:1px solid var(--line);cursor:pointer}
 .webtoggle:not(.hidden){display:inline-flex;align-items:center}
+
+/* Fixed responsive Mini App viewport */
+html,body{
+  width:100%;
+  height:var(--tg-viewport-stable-height,100dvh);
+  min-height:var(--tg-viewport-stable-height,100dvh);
+  overflow:hidden;
+}
+body{
+  padding:max(10px,env(safe-area-inset-top)) 10px max(10px,env(safe-area-inset-bottom));
+}
+.shell{
+  width:100%;
+  max-width:1200px;
+  height:100%;
+  min-height:0;
+  margin:0 auto;
+  overflow:auto;
+  overscroll-behavior:contain;
+}
+.player{width:100%}
+#webWrap,#youtubeWrap,#directWrap{width:100%}
+#webFrame{
+  width:100%;
+  height:clamp(320px,58vh,760px);
+  min-height:320px;
+}
+.wrap iframe,.wrap video{
+  width:100%;
+  max-width:100%;
+}
+@media (min-width:900px){
+  .shell{max-width:1180px}
+  #webFrame{height:clamp(420px,64vh,820px)}
+}
+@media (max-width:700px){
+  body{padding:8px}
+  .shell{max-width:none}
+  #webFrame{height:58vh}
+}
