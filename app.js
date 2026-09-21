@@ -25,8 +25,12 @@ function applyWebSafety(reload=true){
 function openBrowser(src){
   src=(src||'').trim();
   if(!/^https:\/\//i.test(src))return showError('Browser chỉ mở URL HTTPS.');
-  openWeb(src);
   modeBadge.textContent='Browser';
+  try{
+    window.location.assign(src);
+  }catch(_){
+    showError('Không mở được website này trong WebView.');
+  }
 }
 function openWeb(src){
   hideAll();
@@ -38,7 +42,7 @@ function openWeb(src){
   webSafetyToggle.classList.remove('hidden');
   currentMode='web';
 }
-function openAny(input){input=(input||'').trim();if(!/^https:\/\//i.test(input))return showError('Mini App chỉ mở URL HTTPS.');urlInput.value=input;const yid=youtubeId(input);if(yid)return openYoutube(yid);if(isDirect(input))return openDirect(input);return openWeb(input)}
+function openAny(input){input=(input||'').trim();if(!/^https:\/\//i.test(input))return showError('Mini App chỉ mở URL HTTPS.');urlInput.value=input;const yid=youtubeId(input);if(yid)return openYoutube(yid);if(isDirect(input))return openDirect(input);return openBrowser(input)}
 function decodeStartParam(token){try{let s=(token||'').replace(/-/g,'+').replace(/_/g,'/');while(s.length%4)s+='=';const bytes=Uint8Array.from(atob(s),c=>c.charCodeAt(0));return new TextDecoder().decode(bytes)}catch(_){return null}}
 function loadQuery(){const startParam=tg&&tg.initDataUnsafe?tg.initDataUnsafe.start_param:null;if(startParam){const decoded=decodeStartParam(startParam);if(decoded&&decoded.startsWith('browse:'))return openBrowser(decoded.slice(7));if(decoded&&/^https:\/\//i.test(decoded))return openAny(decoded)}const p=new URLSearchParams(location.search),mode=p.get('mode'),v=p.get('v'),src=p.get('src');if(mode==='browser'&&src)return openBrowser(src);if(mode==='youtube'&&v)return openYoutube(v);if((mode==='direct'||mode==='web')&&src){try{return mode==='direct'?openDirect(src):openWeb(src)}catch(_){return showError('URL media không hợp lệ.')}}emptyState.classList.remove('hidden')}
 async function requestJarvisFullscreen(){
